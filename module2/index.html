@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>AngularJS App</title>
+  </head>
+  <body ng-app="myFirstApp">
+    <h1>My first AngularJS app!</h1>
+    <div ng-controller="myFirstController">
+      <div>
+        Name: {{name}} <br>
+        Opposite: {{name | uppercase | opposite : 5}} <br>
+        <input type="text" ng-model="name" ng-keyup="displayNumVal();" />
+      </div>
+      <div>
+        The numeric value of your name is: {{numVal}}
+      </div>
+      <div>
+        <button type="button" name="button" ng-click="changeImg()">Flip</button>
+        <img height="300px;" ng-src="images/sc{{imgNum}}.jpg" />
+      </div>
+    </div>
+  </body>
+</html>
