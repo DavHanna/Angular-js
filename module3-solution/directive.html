@@ -1,0 +1,6 @@
+<p ng-repeat="item in found">
+  ({{item.short_name}}) {{item.name}} <br>
+  description: {{item.description}}
+  <button type="button" ng-click="onRemove({index: $index})" name="button">Don't want this one!</button>
+</p>
+<span style="color: red" ng-if="found.length == 0">Nothing found.</span>

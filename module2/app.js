@@ -1,62 +1,79 @@
 (function() {
 'use strict';
 
-angular.module('myFirstApp', [])
-.controller('myFirstController', myFirstController)
-.filter('opposite', oppositeFilter);
+angular.module('ShoppingListCheckOff', [])
+.controller('ToBuyShoppingController', ToBuyShoppingController)
+.controller('AlreadyBoughtShoppingController', AlreadyBoughtShoppingController)
+.factory('shoppingServiceFactory', shoppingServiceFactory)
+.provider('shoppingServiceProvider', shoppingServiceProvider);
 
-myFirstController.$inject = ['$scope', '$filter', 'oppositeFilter'];
-
-function myFirstController ($scope, $filter) {
-  $scope.name = "";
-  $scope.numVal = 0;
-
-  $scope.displayNumVal = function () {
-    $scope.numVal = calcNumVal($scope.name);
-  }
-
-  $scope.upper = function () {
-    var upCase = $filter('uppercase');
-    $scope.name = upCase($scope.name);
-  }
-
-  function calcNumVal(string) {
-    var totalNumVal = 0;
-    for (var i = 0; i < string.length; i++) {
-      totalNumVal += string.charCodeAt(i);
-    }
-    return totalNumVal;
-  }
-
-
-  $scope.imgNum = 1;
-
-  $scope.changeImg = function() {
-    $scope.imgNum = 2;
-  }
-
-  $scope.$watch('numVal', function(newVal, oldVal) {
-    console.log("old: ", oldVal);
-    console.log("new: ", newVal);
-  });
-
+ToBuyShoppingController.$inject = ['shoppingServiceProvider','shoppingServiceFactory'];
+function ToBuyShoppingController (shoppingServiceProvider, shoppingServiceFactory)
+{
+  var ToBuyController = this;
+  ToBuyController.list = shoppingServiceProvider();
+  ToBuyController.items = ToBuyController.list.showToBuy();
+  ToBuyController.buyItem = function (index) {
+    ToBuyController.list.buy(index);
+  };
 }
 
-function oppositeFilter() {
-  return function(input, max) {
-    input = input || "";
-    max = max || 99999;
-    var output = "";
-    if (input.length <= max)
-    {
-      for (var i = (input.length - 1); i >= 0; i--) {
-        output += input[i];
-      }
-    }
-    else {
-      output = input;
-    }
-    return output;
+AlreadyBoughtShoppingController.$inject = ['shoppingServiceProvider', 'shoppingServiceFactory'];
+function AlreadyBoughtShoppingController (shoppingServiceProvider, shoppingServiceFactory)
+{
+  var AlreadyBoughtController = this;
+  AlreadyBoughtController.list = shoppingServiceProvider();
+  AlreadyBoughtController.items = AlreadyBoughtController.list.showBought();
+}
+
+function shoppingServiceProvider ()
+{
+  var service = this;
+
+  var defaults = {};
+
+  service.$get = function () {
+    var newService = function () {
+      return new ShoppingListCheckOffService(defaults);
+    };
+    return newService;
+  };
+}
+
+function shoppingServiceFactory ()
+{
+  var defaults = {};
+
+  var service = function () {
+    return new ShoppingListCheckOffService(defaults);
+  };
+
+  return service;
+}
+
+function ShoppingListCheckOffService ()
+{
+  var service = this;
+  var to_buy = [
+    { name: "Cookies", quantity: 10 },
+    { name: "Chips", quantity: 100 },
+    { name: "Cakes", quantity: 5 },
+    { name: "Chocolates", quantity: 20 },
+    { name: "Juices", quantity: 3 }
+  ];
+  var bought = [];
+
+  service.buy = function (index) {
+    bought.push(to_buy[index]);
+    to_buy.splice(index, 1);
+  };
+
+  service.showToBuy = function () {
+    return to_buy;
+  };
+
+  service.showBought = function () {
+    return bought;
   };
 }
 
