@@ -1,0 +1,49 @@
+<div class="container">
+  <h2 class="text-center">Sign Up</h2>
+  <br>
+  <form name="signup" class="form-horizontal" novalidate>
+    <div class="form-group">
+      <label class="control-label col-sm-2 col-md-offset-2">First Name:</label>
+      <div class="col-sm-10 col-md-6">
+        <input name="firstname" ng-model="SignUpCtrl.firstName" type="text" class="form-control" placeholder="Enter your first name" required>
+      </div>
+      <span ng-if="signup.firstname.$error.required && signup.firstname.$touched">The first name is required</span>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2 col-md-offset-2">Last Name:</label>
+      <div class="col-sm-10 col-md-6">
+        <input name="lastname" ng-model="SignUpCtrl.lastName" type="text" class="form-control" placeholder="Enter your last name" required>
+      </div>
+      <span ng-if="signup.lastname.$error.required && signup.lastname.$touched">The last name is required</span>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2 col-md-offset-2">Email Address:</label>
+      <div class="col-sm-10 col-md-6">
+        <input name="email" ng-model="SignUpCtrl.email" type="email" class="form-control" placeholder="Enter your email address" required>
+      </div>
+      <span ng-if="signup.email.$error.required && signup.email.$touched">The email address is required</span>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2 col-md-offset-2">Phone Number:</label>
+      <div class="col-sm-10 col-md-6">
+        <input name="phonenumber" ng-model="SignUpCtrl.phoneNumber" type="text" class="form-control" placeholder="Enter your phone number" required>
+      </div>
+      <span ng-if="signup.phonenumber.$error.required && signup.phonenumber.$touched">The phone number is required</span>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2 col-md-offset-2">Favorite Dish:</label>
+      <div class="col-sm-10 col-md-6">
+        <input name="favouritedish" ng-model="SignUpCtrl.favoriteDish" ng-blur="SignUpCtrl.submit()" type="text" class="form-control" placeholder="Specify the menu number that's their favorite dish" required>
+      </div>
+      <span ng-if="signup.favouritedish.$error.required && signup.favouritedish.$touched">The favorite dish is required</span>
+      <span ng-if="SignUpCtrl.invalidDish">No such menu number exists</span>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-8">
+        <button ng-disabled="signup.$invalid" ng-click="SignUpCtrl.submit()" type="submit" class="btn btn-default">Submit</button>
+      </div>
+      <span class="text-center" ng-if="SignUpCtrl.infoSaved">Your information has been saved!</span>
+    </div>
+  </form>
+
+</div>

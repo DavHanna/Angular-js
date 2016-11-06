@@ -1,0 +1,52 @@
+<div class="container">
+  <div ng-if="MyInfoCtrl.userInfo.firstName" id="registered">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tr>
+          <td>
+            First Name
+          </td>
+          <td>
+            {{MyInfoCtrl.userInfo.firstName}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Last Name
+          </td>
+          <td>
+            {{MyInfoCtrl.userInfo.lastName}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Email Address
+          </td>
+          <td>
+            {{MyInfoCtrl.userInfo.email}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Phone Number
+          </td>
+          <td>
+            {{MyInfoCtrl.userInfo.phoneNumber}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Favorite Dish
+          </td>
+          <td>
+            <menu-item menu-item="MyInfoCtrl.userInfo.favoriteDish"></menu-item>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div ng-if="!MyInfoCtrl.userInfo.firstName" id="not-registered">
+    <span>Not Signed Up Yet. <a ui-sref="public.signup">Sign up Now!</a></span>
+
+  </div>
+</div>
